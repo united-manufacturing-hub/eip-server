@@ -4,49 +4,50 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"os"
+	"time"
 
-	// Adjust these imports to match the actual path/layout in your fork/cloned repo
-
-	"github.com/danomagnum/gologix/ethernetip"
-	"github.com/danomagnum/gologix/tag"
+	"github.com/danomagnum/gologix"
 )
 
 func main() {
 	booltags := flag.Int("booltags", 10, "Number of boolean tags to create")
+	path := flag.String("path", "1,0", "Path to read data from")
 	flag.Parse()
 
-	cfg := &ethernetip.ServerConfig{
-		Host: "0.0.0.0",
-		Port: 44818,
-		Path: "1,0",
-		Name: "UMH-EIP",
-	}
+	r := gologix.PathRouter{}
 
-	server, err := ethernetip.NewServer(cfg)
+	mtp := gologix.MapTagProvider{}
+
+	path1, err := gologix.ParsePath(*path)
 	if err != nil {
-		log.Fatalf("Failed to create EIP server: %v", err)
+		log.Printf("problem parsing path. %v", err)
+		os.Exit(1)
 	}
 
-	tagDB := tag.NewEmbeddedTagDB()
+	r.Handle(path1.Bytes(), &mtp)
 
-	for i := 1; i <= *booltags; i++ {
+	s := gologix.NewServer(&r)
+
+	createTags(&mtp, *booltags)
+
+	go s.Serve()
+
+	t := time.NewTicker(time.Second * 5)
+	for {
+		<-t.C
+		mtp.Mutex.Lock()
+		log.Printf("Data 1: %v", mtp.Data)
+		mtp.Mutex.Unlock()
+
+	}
+}
+
+func createTags(mtp *gologix.MapTagProvider, booltags int) {
+	mtp.Mutex.Lock()
+	defer mtp.Mutex.Unlock()
+	for i := 1; i <= booltags; i++ {
 		name := fmt.Sprintf("Bool%d", i)
-		err = tagDB.AddTag(name, tag.CIPBool, false)
-		if err != nil {
-			log.Printf("Failed adding %s: %v", name, err)
-		}
+		mtp.Data[name] = true
 	}
-
-	server.SetTagDB(tagDB)
-
-	go func() {
-		if err := server.Start(); err != nil {
-			log.Fatalf("server.Start() error: %v", err)
-		}
-	}()
-
-	log.Printf("EtherNet/IP server started on %s with CIP path %s", cfg.Host, cfg.Path)
-	log.Printf("Created %d bool tags: Bool1..Bool%d", *booltags, *booltags)
-
-	select {}
 }
