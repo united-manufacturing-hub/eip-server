@@ -59,13 +59,17 @@ func createTags(mtp *gologix.MapTagProvider, booltags int, inttags int) {
 	mtp.Mutex.Lock()
 	defer mtp.Mutex.Unlock()
 	for i := 1; i <= booltags; i++ {
-		name := fmt.Sprintf("Bool%d", i)
-		mtp.Data[name] = true
+		err := mtp.TagWrite(fmt.Sprintf("Bool%d", i), true)
+		if err != nil {
+			return
+		}
 	}
 
 	for i := 1; i <= inttags; i++ {
-		name := fmt.Sprintf("Int%d", i)
 		rndInt := rand.Intn(1000)
-		mtp.Data[name] = rndInt
+		err := mtp.TagWrite(fmt.Sprintf("Int%d", i), rndInt)
+		if err != nil {
+			return
+		}
 	}
 }
