@@ -1,12 +1,10 @@
 name: Build and Publish Container Image
 
 on:
-  workflow_run:
-    workflows: ["Build and Test"]
-    types:
-      - completed
+  push:
     branches:
       - master
+  pull_request:
 
 jobs:
   build-and-publish:
