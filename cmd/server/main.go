@@ -35,7 +35,10 @@ func main() {
 
 	s := gologix.NewServer(&r)
 
-	createTags(&mapTagProvider, *booltags, *inttags)
+	err = createTags(&mapTagProvider, *booltags, *inttags)
+	if err != nil {
+		log.Fatalf("Failed to create tags: %v", err)
+	}
 
 	go func(s *gologix.Server) {
 		err := s.Serve()
@@ -55,13 +58,11 @@ func main() {
 	}
 }
 
-func createTags(mtp *gologix.MapTagProvider, booltags int, inttags int) {
-	mtp.Mutex.Lock()
-	defer mtp.Mutex.Unlock()
+func createTags(mtp *gologix.MapTagProvider, booltags int, inttags int) error {
 	for i := 1; i <= booltags; i++ {
 		err := mtp.TagWrite(fmt.Sprintf("Bool%d", i), true)
 		if err != nil {
-			return
+			return err
 		}
 	}
 
@@ -69,7 +70,8 @@ func createTags(mtp *gologix.MapTagProvider, booltags int, inttags int) {
 		rndInt := rand.Intn(1000)
 		err := mtp.TagWrite(fmt.Sprintf("Int%d", i), rndInt)
 		if err != nil {
-			return
+			return err
 		}
 	}
+	return nil
 }
