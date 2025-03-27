@@ -68,7 +68,7 @@ func createTags(mtp *gologix.MapTagProvider, booltags int, inttags int) error {
 
 	for i := 1; i <= inttags; i++ {
 		rndInt := rand.Intn(1000)
-		err := mtp.TagWrite(fmt.Sprintf("Int%d", i), rndInt)
+		err := mtp.TagWrite(fmt.Sprintf("Int%d", i), int16(rndInt))
 		if err != nil {
 			return err
 		}
