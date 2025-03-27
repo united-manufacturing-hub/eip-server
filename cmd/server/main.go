@@ -77,11 +77,7 @@ func createTags(mtp *gologix.MapTagProvider, booltags int, inttags int) error {
 	if err != nil {
 		return err
 	}
-	err = mtp.TagWrite("testfloat32", float32(543.21))
-	if err != nil {
-		return err
-	}
-	err = mtp.TagWrite("testint32slice", []int32{1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+	err = mtp.TagWrite("testint64", int64(12345678))
 	if err != nil {
 		return err
 	}
@@ -93,7 +89,36 @@ func createTags(mtp *gologix.MapTagProvider, booltags int, inttags int) error {
 	if err != nil {
 		return err
 	}
+	err = mtp.TagWrite("testuint64", uint64(1234567))
+	if err != nil {
+		return err
+	}
+	err = mtp.TagWrite("testuint32", uint32(1234))
+	if err != nil {
+		return err
+	}
+	err = mtp.TagWrite("testuint", uint16(123))
+	if err != nil {
+		return err
+	}
+	err = mtp.TagWrite("testfloat32", float32(543.21))
+	if err != nil {
+		return err
+	}
+	err = mtp.TagWrite("testfloat64", float64(123543.21))
+	if err != nil {
+		return err
+	}
+	err = mtp.TagWrite("testint32slice", []int32{1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+	if err != nil {
+		return err
+	}
 	err = mtp.TagWrite("teststring", "Hello World")
+	if err != nil {
+		return err
+	}
+
+	err = mtp.TagWrite("testfloat64", float64(10238.21))
 	if err != nil {
 		return err
 	}
