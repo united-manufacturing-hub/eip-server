@@ -12,4 +12,6 @@ FROM scratch
 
 COPY --from=0 /eip-server /eip-server
 
-CMD ["/eip-server", "--booltags=5", "--inttags=5"]
+WORKDIR /
+
+ENTRYPOINT ["/eip-server"]
