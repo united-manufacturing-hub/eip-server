@@ -114,15 +114,55 @@ func createTags(mtp *gologix.MapTagProvider, booltags int, inttags int) error {
 	if err != nil {
 		return err
 	}
-	err = mtp.TagWrite("testint32slice", []int32{1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
-	if err != nil {
-		return err
-	}
 	err = mtp.TagWrite("teststring", "Hello World")
 	if err != nil {
 		return err
 	}
 	err = mtp.TagWrite("testfloat64", float64(10238.21))
+	if err != nil {
+		return err
+	}
+	err = mtp.TagWrite("testboolarray", []bool{true, false, true, false, true, false, true, false, true, false})
+	if err != nil {
+		return err
+	}
+	err = mtp.TagWrite("testbytearray", []byte{0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x01, 0x02, 0x03})
+	if err != nil {
+		return err
+	}
+	err = mtp.TagWrite("testuint8array", []int8{1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+	if err != nil {
+		return err
+	}
+	err = mtp.TagWrite("testuint16array", []int16{1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+	if err != nil {
+		return err
+	}
+	err = mtp.TagWrite("testuint32array", []int32{1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+	if err != nil {
+		return err
+	}
+	err = mtp.TagWrite("testuint32array", []int64{1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+	if err != nil {
+		return err
+	}
+	err = mtp.TagWrite("testuint8array", []uint8{1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+	if err != nil {
+		return err
+	}
+	err = mtp.TagWrite("testuint16array", []uint16{1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+	if err != nil {
+		return err
+	}
+	err = mtp.TagWrite("testuint32array", []uint32{1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+	if err != nil {
+		return err
+	}
+	err = mtp.TagWrite("testuint32array", []uint64{1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+	if err != nil {
+		return err
+	}
+	err = mtp.TagWrite("teststringarray", []string{"Hello1", "World1", "Hello2", "World2", "Hello3", "World3", "Hello4", "World4", "Hello5", "World5"})
 	if err != nil {
 		return err
 	}
