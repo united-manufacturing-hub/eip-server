@@ -162,6 +162,14 @@ func createTags(mtp *gologix.MapTagProvider, booltags int, inttags int) error {
 	if err != nil {
 		return err
 	}
+	err = mtp.TagWrite("testfloat32array", []float32{1.234, 2.567, 3.172, 4.234, 5.342, 6.31, 7.521, 8.42, 9.23, 10.123})
+	if err != nil {
+		return err
+	}
+	err = mtp.TagWrite("testfloat64array", []float64{10.123, 2.321, 3.313, 4.543, 5.123, 6.12, 7.423, 8.32, 9.12, 10.64})
+	if err != nil {
+		return err
+	}
 	err = mtp.TagWrite("teststringarray", []string{"Hello1", "World1", "Hello2", "World2", "Hello3", "World3", "Hello4", "World4", "Hello5", "World5"})
 	if err != nil {
 		return err
