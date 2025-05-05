@@ -122,7 +122,13 @@ func createTags(mtp *gologix.MapTagProvider, booltags int, inttags int) error {
 	if err != nil {
 		return err
 	}
-	err = mtp.TagWrite("testboolarray", []bool{true, false, true, false, true, false, true, false, true, false})
+	err = mtp.TagWrite("testboolarray",
+		[]bool{
+			true, false, true, false, true, false, true, false, true, false,
+			true, false, true, false, true, false, true, false, true, false,
+			true, false, true, false, true, false, true, false, true, false,
+			true, false,
+		})
 	if err != nil {
 		return err
 	}
