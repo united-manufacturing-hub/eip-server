@@ -54,7 +54,6 @@ func main() {
 		mapTagProvider.Mutex.Lock()
 		log.Printf("Data 1: %v", mapTagProvider.Data)
 		mapTagProvider.Mutex.Unlock()
-
 	}
 }
 

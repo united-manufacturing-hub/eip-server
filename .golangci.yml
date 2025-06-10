@@ -1,0 +1,62 @@
+---
+version: "2"
+
+formatters:
+  enable:
+    - gci
+    - gofumpt
+
+  settings:
+    gci:
+      sections:
+        - standard
+        - default
+        - prefix(github.com/led0nk/eip-server)
+
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0
+
+linters:
+  enable:
+    - errcheck
+    - govet
+    - staticcheck
+    - revive
+    - gosec
+
+    - unused
+    - unparam
+    - misspell
+    - whitespace
+
+  settings:
+    govet:
+      enable-all: true
+      disable:
+        - fieldalignment
+    staticcheck:
+      checks:
+        - all
+        - -ST1005
+    gosec:
+      excludes:
+        - G115
+        - G404
+    misspell:
+      locale: US
+    revive:
+      confidence: 0.8
+
+run:
+  concurrency: 4
+  timeout: 5m
+  tests: true
+  allow-parallel-runners: true
+
+output:
+  formats:
+    text:
+      path: stdout
+      print-issued-lines: true
+      print-linter-name: true
