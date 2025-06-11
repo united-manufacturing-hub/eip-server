@@ -1,5 +1,6 @@
 GO_VERSION=1.24
 GOLINT_VERSION=v2.1.6
+LICENSE_EYE_VERSION=v0.7.0
 PROJECT ?= eip-server
 
 
@@ -10,6 +11,7 @@ TOOLS_DIR=$(ROOT_DIR)/.tools
 ALL_GO_FILES=$(shell find $(ROOT_DIR) -type f -name "*.go")
 
 LINT := $(TOOLS_DIR)/golangci-lint
+LICENSE_EYE := $(TOOLS_DIR)/license-eye
 
 GOCMD ?= go
 GO_ENV=$(shell CGO_ENABLED=0)
@@ -38,9 +40,18 @@ test: govet
 gomoddownload:
 	$(GOCMD) mod download -x
 
+.PHONY: license-fix
+license-fix: tools
+	@$(LICENSE_EYE) header fix
+
+.PHONY: license-check
+license-check: tools
+	@$(LICENSE_EYE) header check
+
 .PHONY: tools
 tools: $(TOOLS_DIR)
 	GOBIN=$(TOOLS_DIR) go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@$(GOLINT_VERSION)
+	GOBIN=$(TOOLS_DIR) go install github.com/apache/skywalking-eyes/cmd/license-eye@$(LICENSE_EYE_VERSION)
 
 .PHONY: lint
 lint:
@@ -55,7 +66,7 @@ vendor:
 	$(GOCMD) mod vendor
 
 .PHONY: build
-build: tools
+build:
 	$(GOCMD) build -o bin/eip-server cmd/server/main.go
 
 .PHONY: exec

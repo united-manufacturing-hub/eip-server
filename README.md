@@ -8,13 +8,13 @@ A small EtherNet/IP (CIP) test server written in Go. It uses the [gologix](https
 
 ```bash
 # clone the repo
-git clone https://github.com/led0nk/eip-server && cd eip-server
+git clone https://github.com/united-manufacturing-hub/eip-server && cd eip-server
 
 # run with defaults (booltags=10, inttags=10, path="1,0")
-go run .
+make run
 
 # or build a binary
-go build -o eip-server
+make build
 ./eip-server -booltags 32 -inttags 64 -path "1,0"
 ```
 
@@ -25,7 +25,7 @@ The server listens on **TCP/44818** (the EtherNet/IP standard port). Use any com
 ## Run in Docker
 
 ```bash
-docker run -p 44818:44818 ghcr.io/led0nk/eip-server:latest \
+docker run -p 44818:44818 ghcr.io/united-manufacturing-hub/eip-server:latest \
            -booltags 32 -inttags 64 -path "1,0"
 ```
 
@@ -33,7 +33,7 @@ docker run -p 44818:44818 ghcr.io/led0nk/eip-server:latest \
 
 ```yaml
 eip-server:
-  image: ghcr.io/led0nk/eip-server:latest
+  image: ghcr.io/united-manufacturing-hub/eip-server:latest
   ports:
     - "44818:44818"
   command: ["-booltags", "32", "-inttags", "64", "-path", "1,0"]

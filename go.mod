@@ -1,4 +1,4 @@
-module github.com/led0nk/eip-server
+module github.com/united-manufacturing-hub/eip-server
 
 go 1.24.0
 
